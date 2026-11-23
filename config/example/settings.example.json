@@ -39,8 +39,14 @@
     {
       "name": "tsib",
       "root_dir": "~/Downloads/bank-estatements/台新_TSIB",
-      "filename": "*.pdf",
+      "filename": "*電子對帳單*.pdf",
       "password_env": "UPASSPDF_TW_ID"
+    },
+    {
+      "name": "tsib_creditcard",
+      "root_dir": "~/Downloads/bank-estatements/台新_TSIB",
+      "filename": "*TSB_Creditcard_Estatement*.pdf",
+      "password_env": "UPASSPDF_TW_ID_TSIB_CREDITCARD"
     },
     {
       "name": "ycb",
