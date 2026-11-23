@@ -1,0 +1,2 @@
+- 填入 8 家機構的密碼到 ~/.config/upasspdf/.env, 用 run --dry-run 確認後執行 run
+- 台新 / 元大若信用卡與存款對帳單密碼不同, 拆成多個 entity (filename glob)

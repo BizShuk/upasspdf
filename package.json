@@ -1,0 +1,14 @@
+{
+  "name": "upasspdf",
+  "version": "0.0.0",
+  "private": true,
+  "description": "PDF 密碼解除 CLI: 依機構設定 (資料夾, 檔名 glob, 密碼環境變數) 就地移除銀行對帳單 PDF 的開啟密碼",
+  "scripts": {
+    "dev": "go run .",
+    "test": "go test ./...",
+    "build": "go build -o bin/upasspdf .",
+    "install": "go install . && upasspdf config default",
+    "lint": "gofmt -l . && go vet ./...",
+    "clean": "rm -rf bin"
+  }
+}
