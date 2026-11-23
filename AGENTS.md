@@ -14,7 +14,7 @@ upasspdf/
 ├── config/example/          # settings.example.json + .env.example, embed 給 `config default`
 ├── model/                   # Settings / Entity: viper 反序列化, 路徑解析, 從 env 取密碼
 └── svc/
-    ├── pdf/                 # 單檔: IsEncrypted, DecryptInPlace (pdfcpu, 保留 mtime)
+    ├── pdf/                 # 單檔: IsEncrypted, DecryptInPlace (呼叫 qpdf, 保留 mtime 與權限)
     │   └── pdftest/         # 測試用明文 / 加密 PDF 產生器
     └── batch/               # 資料夾: glob 篩選, 逐檔解密, Summary 統計
 ```
