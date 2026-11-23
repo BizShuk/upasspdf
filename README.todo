@@ -1,2 +1,1 @@
-- 填入 8 家機構的密碼到 ~/.config/upasspdf/.env, 用 run --dry-run 確認後執行 run
-- 台新 / 元大若信用卡與存款對帳單密碼不同, 拆成多個 entity (filename glob)
+- 補上富邦 (UPASSPDF_TFB_PASSWORD), 台新 (UPASSPDF_TSIB_PASSWORD), 法巴人壽 (UPASSPDF_CARDIF_PASSWORD) 的密碼規則後加回 settings.json

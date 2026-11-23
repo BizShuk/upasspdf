@@ -3,14 +3,12 @@ package pdftest
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 
-	"github.com/pdfcpu/pdfcpu/pkg/api"
-	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/model"
 	"github.com/stretchr/testify/require"
 )
 
@@ -40,16 +38,18 @@ func minimalPDF() []byte {
 // WritePlainPDF 寫出未加密 PDF.
 func WritePlainPDF(t testing.TB, dir, name string) string {
 	t.Helper()
+	require.NoError(t, os.MkdirAll(dir, 0o755))
 	path := filepath.Join(dir, name)
 	require.NoError(t, os.WriteFile(path, minimalPDF(), 0o644))
 	return path
 }
 
-// WriteEncryptedPDF 寫出以 userPW 加密的 PDF (owner password 與 user password 不同).
+// WriteEncryptedPDF 以 qpdf 寫出 AES-256 加密 PDF; userPW 為空時只有 owner password.
 func WriteEncryptedPDF(t testing.TB, dir, name, userPW string) string {
 	t.Helper()
 	path := WritePlainPDF(t, dir, name)
-	conf := model.NewAESConfiguration(userPW, "owner-"+userPW, 256)
-	require.NoError(t, api.EncryptFile(context.Background(), path, "", conf))
+	out, err := exec.Command("qpdf", "--encrypt", "--user-password="+userPW, "--owner-password=owner-"+userPW, "--bits=256", "--",
+		"--replace-input", path).CombinedOutput()
+	require.NoError(t, err, string(out))
 	return path
 }

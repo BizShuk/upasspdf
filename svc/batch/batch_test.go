@@ -2,6 +2,7 @@ package batch
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/bizshuk/upasspdf/svc/pdf"
@@ -44,4 +45,15 @@ func TestRunDryRunAndWrongPassword(t *testing.T) {
 
 func TestRunMissingDir(t *testing.T) {
 	assert.Equal(t, Summary{Failed: 1}, Run(context.Background(), Job{Dir: "/nonexistent/upasspdf"}))
+}
+
+func TestRunLeavesNoStrayFiles(t *testing.T) {
+	dir := t.TempDir()
+	pdftest.WriteEncryptedPDF(t, dir, "a.pdf", "secret")
+	Run(context.Background(), Job{Dir: dir, Password: "wrong"})
+	Run(context.Background(), Job{Dir: dir, Password: "secret"})
+	entries, err := os.ReadDir(dir)
+	require.NoError(t, err)
+	require.Len(t, entries, 1)
+	assert.Equal(t, "a.pdf", entries[0].Name())
 }

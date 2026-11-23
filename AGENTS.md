@@ -21,8 +21,10 @@ upasspdf/
 
 ## 慣例 (Conventions)
 
-- PDF 處理只用 `github.com/pdfcpu/pdfcpu` (純 Go, 不依賴 qpdf); `api.DisableConfigDir()` 避免 pdfcpu 建立自己的設定目錄.
-- 覆寫採 pdfcpu 的 staged output (先寫暫存再 rename), 失敗時原檔不變.
+- 解密只透過外部 `qpdf` (`brew install qpdf`), 密碼以 `--password-file=-` 從 stdin 傳入, 不出現在 process 參數.
+- 不用 pdfcpu: 元大對帳單的 `/Perms` 標記 metadata 不加密, 加密字典卻缺 `/EncryptMetadata false`, pdfcpu 一律拒絕 (`invalid permissions`) 且無放寬選項; qpdf 只發警告 (exit 3) 並正確解密.
+- 覆寫流程: qpdf 寫到同資料夾 `.upasspdf-*.pdf` 暫存檔, 成功後還原權限再 rename; 不用 `--replace-input` (遇警告會留下 `.~qpdf-orig`). 失敗時原檔不變.
 - 密碼只透過 `password_env` 間接取得: `viper.GetString(lower(password_env))`, 來源為 `.env` 或 OS env.
 - 使用者提供密碼卻回 `ErrWrongPassword` 時, 會再以空密碼重試一次 (只設 owner 權限限制的檔案).
+- 測試的加密 PDF 由 `qpdf --encrypt` 產生, 因此跑測試也需要 qpdf.
 - 指令: `npm run test` / `npm run lint` / `npm run build`.

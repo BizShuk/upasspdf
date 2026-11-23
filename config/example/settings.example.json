@@ -5,7 +5,7 @@
       "name": "bsp",
       "path": "永豐_BSP",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_BSP_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "cardif",
@@ -17,19 +17,19 @@
       "name": "ctbc",
       "path": "中國信託_CTBC",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_CTBC_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "esun",
       "path": "玉山_ESUN",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_ESUN_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "post",
       "path": "中華郵政_POST",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_POST_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "tfb",
@@ -47,7 +47,7 @@
       "name": "ycb",
       "path": "元大_YCB",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_YCB_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     }
   ]
 }

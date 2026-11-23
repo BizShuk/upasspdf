@@ -31,6 +31,7 @@ func TestDecryptInPlace(t *testing.T) {
 	info, err := os.Stat(path)
 	require.NoError(t, err)
 	assert.True(t, info.ModTime().Equal(mtime), "mtime kept")
+	assert.Equal(t, os.FileMode(0o644), info.Mode().Perm(), "mode kept")
 }
 
 func TestDecryptInPlaceWrongPassword(t *testing.T) {
@@ -50,4 +51,12 @@ func TestDecryptInPlaceWrongPassword(t *testing.T) {
 func TestDecryptInPlaceNotEncrypted(t *testing.T) {
 	path := pdftest.WritePlainPDF(t, t.TempDir(), "a.pdf")
 	assert.ErrorIs(t, DecryptInPlace(context.Background(), path, "secret"), ErrNotEncrypted)
+}
+
+func TestDecryptInPlaceOwnerOnly(t *testing.T) {
+	path := pdftest.WriteEncryptedPDF(t, t.TempDir(), "a.pdf", "")
+	require.NoError(t, DecryptInPlace(context.Background(), path, "some-user-password"))
+	enc, err := IsEncrypted(path)
+	require.NoError(t, err)
+	assert.False(t, enc)
 }

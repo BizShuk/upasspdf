@@ -40,8 +40,9 @@ upasspdf decrypt -d ./statements -p <密碼> -f "*_Estatement_*.pdf" --dry-run
 ## 安裝與設定 (Setup)
 
 ```bash
+brew install qpdf                   # 解密引擎
 npm run install                     # go install + 種入 ~/.config/upasspdf/{settings.json,.env}
-upasspdf config --file .env --update UPASSPDF_CTBC_PASSWORD=<密碼>
+upasspdf config --file .env --update UPASSPDF_TW_ID=<身分證字號>   # 永豐, 中信, 玉山, 郵局, 元大共用
 upasspdf run --dry-run              # 先看每個 entity 待解密的檔案
 upasspdf run                        # 實際解密
 ```
