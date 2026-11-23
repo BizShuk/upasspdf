@@ -3,32 +3,35 @@ package model
 import (
 	"errors"
 	"fmt"
-	"path/filepath"
 	"strings"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
-// Settings 是 settings.json 的完整內容: 根目錄加上每個機構的解密規則.
+// Settings 是 settings.json 的完整內容: 每個機構的解密規則.
 type Settings struct {
-	RootDir  string   `mapstructure:"root_dir"`
 	Entities []Entity `mapstructure:"entities"`
 }
 
-// LoadSettings 從 viper 讀出 Settings 並展開根目錄的 ~.
+// LoadSettings 從 viper 讀出 Settings 並展開每個 entity root_dir 的 ~.
 func LoadSettings() (Settings, error) {
 	var s Settings
 	if err := viper.Unmarshal(&s); err != nil {
 		return s, fmt.Errorf("parse settings: %w", err)
 	}
-	root, err := homedir.Expand(s.RootDir)
-	if err != nil {
-		return s, fmt.Errorf("expand root_dir %q: %w", s.RootDir, err)
-	}
-	s.RootDir = root
 	if len(s.Entities) == 0 {
 		return s, errors.New("settings has no entities; run `upasspdf config default` to seed settings.json")
+	}
+	for i := range s.Entities {
+		if s.Entities[i].RootDir == "" {
+			return s, fmt.Errorf("entity %q missing root_dir", s.Entities[i].Name)
+		}
+		root, err := homedir.Expand(s.Entities[i].RootDir)
+		if err != nil {
+			return s, fmt.Errorf("expand root_dir %q for entity %q: %w", s.Entities[i].RootDir, s.Entities[i].Name, err)
+		}
+		s.Entities[i].RootDir = root
 	}
 	return s, nil
 }
@@ -44,13 +47,4 @@ func (s Settings) Select(name string) ([]Entity, error) {
 		}
 	}
 	return nil, fmt.Errorf("entity %q not found in settings", name)
-}
-
-// EntityDir 回傳 entity 的資料夾: 絕對路徑原樣使用, 相對路徑接在 root_dir 之下.
-func (s Settings) EntityDir(e Entity) string {
-	p, err := homedir.Expand(e.Path)
-	if err == nil && filepath.IsAbs(p) {
-		return p
-	}
-	return filepath.Join(s.RootDir, e.Path)
 }

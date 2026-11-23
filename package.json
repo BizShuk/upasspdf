@@ -9,6 +9,7 @@
     "build": "go build -o bin/upasspdf .",
     "install": "go install . && upasspdf config default",
     "lint": "gofmt -l . && go vet ./...",
-    "clean": "rm -rf bin"
+    "clean": "rm -rf bin",
+    "run:setup": "bash ./scripts/run.sh"
   }
 }

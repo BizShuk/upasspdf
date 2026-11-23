@@ -12,7 +12,7 @@
 | 欄位 | 說明 |
 | --- | --- |
 | `name` | 機構代號, `run -e <name>` 用它挑選 |
-| `path` | 資料夾; 相對路徑接在 `root_dir` 之下, 絕對路徑原樣使用 |
+| `root_dir` | 機構資料夾路徑 (支援 `~` 展開) |
 | `filename` | 檔名 glob, 預設 `*.pdf`; 同一資料夾不同密碼的檔案拆成多個 entity |
 | `password_env` | 存放密碼的環境變數名稱, 密碼本身`不寫`在 settings.json |
 

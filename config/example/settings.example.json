@@ -1,51 +1,50 @@
 {
-  "root_dir": "~/Downloads/bank-estatements",
   "entities": [
     {
       "name": "bsp",
-      "path": "永豐_BSP",
+      "root_dir": "~/Downloads/bank-estatements/永豐_BSP",
       "filename": "*.pdf",
       "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "cardif",
-      "path": "法國巴黎人壽_CARDIF",
+      "root_dir": "~/Downloads/bank-estatements/法國巴黎人壽_CARDIF",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_CARDIF_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID_CARDIF"
     },
     {
       "name": "ctbc",
-      "path": "中國信託_CTBC",
+      "root_dir": "~/Downloads/bank-estatements/中國信託_CTBC",
       "filename": "*.pdf",
       "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "esun",
-      "path": "玉山_ESUN",
+      "root_dir": "~/Downloads/bank-estatements/玉山_ESUN",
       "filename": "*.pdf",
       "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "post",
-      "path": "中華郵政_POST",
+      "root_dir": "~/Downloads/bank-estatements/中華郵政_POST",
       "filename": "*.pdf",
       "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "tfb",
-      "path": "台北富邦_TFB",
+      "root_dir": "~/Downloads/bank-estatements/台北富邦_TFB",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_TFB_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "tsib",
-      "path": "台新_TSIB",
+      "root_dir": "~/Downloads/bank-estatements/台新_TSIB",
       "filename": "*.pdf",
-      "password_env": "UPASSPDF_TSIB_PASSWORD"
+      "password_env": "UPASSPDF_TW_ID"
     },
     {
       "name": "ycb",
-      "path": "元大_YCB",
+      "root_dir": "~/Downloads/bank-estatements/元大_YCB",
       "filename": "*.pdf",
       "password_env": "UPASSPDF_TW_ID"
     }

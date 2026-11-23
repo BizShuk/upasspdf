@@ -34,7 +34,7 @@ var RunCmd = &cobra.Command{
 				fmt.Printf("[%s] password env %s is not set, listing only\n", e.Name, e.PasswordEnv)
 			}
 			summary := batch.Run(c.Context(), batch.Job{
-				Dir:      settings.EntityDir(e),
+				Dir:      e.RootDir,
 				Filename: e.Filename,
 				Password: password,
 				DryRun:   runDryRun || !ok,

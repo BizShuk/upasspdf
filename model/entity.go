@@ -9,7 +9,7 @@ import (
 // Entity 是一家機構 (銀行, 保險) 的解密規則: 資料夾, 檔名 glob, 以及存放密碼的環境變數名稱.
 type Entity struct {
 	Name        string `mapstructure:"name"`
-	Path        string `mapstructure:"path"`
+	RootDir     string `mapstructure:"root_dir"`
 	Filename    string `mapstructure:"filename"`
 	PasswordEnv string `mapstructure:"password_env"`
 }

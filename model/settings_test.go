@@ -1,6 +1,9 @@
 package model
 
 import (
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/spf13/viper"
@@ -8,10 +11,38 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestEntityDir(t *testing.T) {
-	s := Settings{RootDir: "/root/statements"}
-	assert.Equal(t, "/root/statements/中國信託_CTBC", s.EntityDir(Entity{Path: "中國信託_CTBC"}))
-	assert.Equal(t, "/abs/dir", s.EntityDir(Entity{Path: "/abs/dir"}))
+func TestLoadSettings(t *testing.T) {
+	home, err := os.UserHomeDir()
+	require.NoError(t, err)
+
+	viper.Reset()
+	viper.SetConfigType("json")
+	require.NoError(t, viper.ReadConfig(strings.NewReader(`{
+		"entities": [
+			{"name": "ctbc", "root_dir": "~/Downloads/bank-estatements/中國信託_CTBC", "filename": "*.pdf", "password_env": "UPASSPDF_TW_ID"},
+			{"name": "esun", "root_dir": "/abs/dir", "filename": "*.pdf", "password_env": "UPASSPDF_TW_ID"}
+		]
+	}`)))
+
+	s, err := LoadSettings()
+	require.NoError(t, err)
+	require.Len(t, s.Entities, 2)
+	assert.Equal(t, filepath.Join(home, "Downloads/bank-estatements/中國信託_CTBC"), s.Entities[0].RootDir)
+	assert.Equal(t, "/abs/dir", s.Entities[1].RootDir)
+}
+
+func TestLoadSettingsErrors(t *testing.T) {
+	viper.Reset()
+	viper.SetConfigType("json")
+	require.NoError(t, viper.ReadConfig(strings.NewReader(`{"entities": []}`)))
+	_, err := LoadSettings()
+	assert.Error(t, err)
+
+	viper.Reset()
+	viper.SetConfigType("json")
+	require.NoError(t, viper.ReadConfig(strings.NewReader(`{"entities": [{"name": "ctbc"}]}`)))
+	_, err = LoadSettings()
+	assert.Error(t, err)
 }
 
 func TestSelect(t *testing.T) {
